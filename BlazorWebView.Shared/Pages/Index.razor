@@ -1,0 +1,89 @@
+﻿@page "/"
+@using System.Net.Sockets
+@using System.Threading
+@using System
+
+<br />
+
+<div>
+    <Row Justify="center">
+        <Col Span="12">
+        <h3>@value</h3>
+        </Col>
+    </Row>
+</div>
+
+<br />
+
+<div>
+    <Row Justify="center">
+        <Col Span="12">
+        <Input Placeholder="IP: " @bind-Value="@ip" style="margin-right: 8px" />
+        </Col>
+        <Col Span="12">
+        <Input Placeholder="Port:" @bind-Value="@port" style="margin-left: 8px" />
+        </Col>
+    </Row>
+</div>
+
+<br />
+
+<div>
+    <Row Justify="center">
+        <Col Span="6">
+        <Button Type="primary" @onclick="connect">Connect</Button>
+        </Col>
+        <Col Span="6" />
+        <Col Span="6">
+        <Button Type="primary" @onclick="disconnect" Danger>Disconnect</Button>
+        </Col>
+    </Row>
+</div>
+
+
+@code { bool IsConnected { get; set; }
+            public string value { get; set; } = "disconnected";
+            public string ip { get; set; }
+            public string port { get; set; }
+
+            private TcpClient client;
+
+            public void disconnect()
+            {
+                if (client != null)
+                {
+                    client.Close();
+                    value = "Disconnected";
+                }
+            }
+
+            public void connect()
+            {
+                Console.WriteLine("connecting.....");
+
+                client = new TcpClient();
+                client.ReceiveTimeout = 2000;
+                client.SendTimeout = 2000;
+                var result = client.BeginConnect(ip, Int32.Parse(port), null, null);
+                int counter = 0;
+                while (counter < 20)
+                {
+                    counter++;
+                    Thread.Sleep(100);
+                    if (client != null && client.Client != null && client.Connected)
+                    {
+                        IsConnected = true;
+                        Console.WriteLine("connected");
+                        value = "Connected";
+                        return;
+                    }
+
+                }
+                IsConnected = false;
+
+                value = "disconnected";
+
+                Console.WriteLine("can not connect");
+
+            }
+    }

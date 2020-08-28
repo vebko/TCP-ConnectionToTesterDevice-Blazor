@@ -1,0 +1,2 @@
+values/strings.xml;values/strings.xml
+layout/BlazorWebView.xml;layout/blazorwebview.xml

@@ -1,0 +1,4 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="_content/AntDesign" Path="C:\Users\11\.nuget\packages\antdesign\0.2.0\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/BlazorWebView.Shared" Path="C:\Users\11\Desktop\ConnectionWithBlazor\BlazorWebView.Shared\wwwroot\" />
+</StaticWebAssets>
